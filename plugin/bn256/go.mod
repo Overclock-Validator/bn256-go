@@ -1,4 +1,4 @@
-module github.com/clearmatics/bn256
+module github.com/DankFC/compile-bug/plugin/bn256
 
 go 1.12
 
