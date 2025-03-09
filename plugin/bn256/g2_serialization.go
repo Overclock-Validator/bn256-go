@@ -190,9 +190,10 @@ func (e *G2) DecodeCompressed(encoding []byte) error {
 	if len(encoding) != 64 {
 		return errors.New("wrong encoded point size")
 	}
-	if encoding[0]&serializationCompressed == 0 { // Also test the length of the encoding to make sure it is 33bytes
+
+	/*if encoding[0]&serializationCompressed == 0 { // Also test the length of the encoding to make sure it is 33bytes
 		return errors.New("point isn't compressed")
-	}
+	}*/
 
 	// Unmarshal the points and check their caps
 	if e.p == nil {
