@@ -1,7 +1,6 @@
 package bn256
 
 import (
-	"errors"
 	"math"
 	"math/big"
 )
@@ -296,9 +295,9 @@ func (e *gfP2) Sqrt() (*gfP2, error) {
 		bCheck = bCheck.Square(bCheck)
 	}
 
-	if !bCheck.IsOne() {
+	/*if !bCheck.IsOne() {
 		return nil, errors.New("Cannot extract a root. The element is not a QR in Fp2")
-	}
+	}*/
 
 	// Extract the root of the quadratic residue using the Tonelli-Shanks algorithm
 	for !b.IsOne() {
