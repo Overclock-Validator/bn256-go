@@ -187,7 +187,7 @@ func getYFromMontEncodedXG2(x *gfP2) (*gfP2, error) {
 // Take a point P in G2 decoded (ie: written in affine form where each coordinate is MontDecoded)
 // and encodes it by going back to Jacobian coordinates and montEncode all coordinates
 func (e *G2) DecodeCompressed(encoding []byte) error {
-	if len(encoding) != G2CompressedSize {
+	if len(encoding) != 64 {
 		return errors.New("wrong encoded point size")
 	}
 	if encoding[0]&serializationCompressed == 0 { // Also test the length of the encoding to make sure it is 33bytes
@@ -206,7 +206,7 @@ func (e *G2) DecodeCompressed(encoding []byte) error {
 
 	// Removes the bits of the masking (This does a bitwise AND with `0001 1111`)
 	// And thus removes the first 3 bits corresponding to the masking
-	bin := make([]byte, G2CompressedSize)
+	bin := make([]byte, 64)
 	copy(bin, encoding)
 	bin[0] &= serializationMask
 
@@ -229,10 +229,10 @@ func (e *G2) DecodeCompressed(encoding []byte) error {
 
 	// Decompress the point P (P =/= ∞)
 	var err error
-	if err = e.p.x.x.Unmarshal(bin[1:]); err != nil {
+	if err = e.p.x.x.Unmarshal(bin[:FqElementSize]); err != nil {
 		return err
 	}
-	if err = e.p.x.y.Unmarshal(bin[FqElementSize+1:]); err != nil {
+	if err = e.p.x.y.Unmarshal(bin[FqElementSize:]); err != nil {
 		return err
 	}
 
